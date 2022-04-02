@@ -93,7 +93,7 @@ class CustomerAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         return super().get_queryset(request).annotate(
-            orders_count=Count('order')
+            products_count=Count('products')
         )
 
 

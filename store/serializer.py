@@ -2,11 +2,11 @@ from dataclasses import field
 from decimal import Decimal
 from pyexpat import model
 from rest_framework import serializers
-from store.models import Product, Collection
+from store.models import Product, Collection, Review
 
 
 class CollectionSerializer(serializers.ModelSerializer):
-    products_count = serializers.IntegerField()
+    products_count = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Collection
@@ -16,7 +16,6 @@ class CollectionSerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     price_with_tax = serializers.SerializerMethodField(
         method_name='calculate_tax')
-    collection = CollectionSerializer()
 
     def calculate_tax(self, product: Product):
         return product.unit_price * Decimal(1.1)
@@ -25,3 +24,14 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = ['id', 'title', 'description', 'slug', 'inventory',
                   'unit_price', 'price_with_tax', 'collection']
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+
+    def create(self, validated_data):
+        product_id = self.context['product_id']
+        return Review.objects.create(product_id=product_id, **validated_data)
+
+    class Meta:
+        model = Review
+        fields = ['id', 'date', 'name', 'description']
