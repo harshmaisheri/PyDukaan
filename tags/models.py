@@ -2,8 +2,6 @@ from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 
-# Create your models here.
-
 
 class TaggedItemManager(models.Manager):
     def get_tags_for(self, obj_type, obj_id):
@@ -23,9 +21,9 @@ class Tag(models.Model):
         return self.label
 
 
-class TaggedItem (models.Model):
+class TaggedItem(models.Model):
     objects = TaggedItemManager()
     tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
-    content_type_object = GenericForeignKey()
+    content_object = GenericForeignKey()
