@@ -21,6 +21,9 @@ flower = "*"
 
 [dev-packages]
 autopep8 = "*"
+pytest = "*"
+pytest-django = "*"
+model-bakery = "*"
 
 [requires]
 python_version = "3.9"
