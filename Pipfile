@@ -15,6 +15,9 @@ djangorestframework-simplejwt = "*"
 pymysql = "*"
 pillow = "*"
 django-cors-headers = "*"
+redis = "*"
+celery = "*"
+flower = "*"
 
 [dev-packages]
 autopep8 = "*"
